@@ -99,7 +99,7 @@ def DetailMemberButtonCommand():
         dwin.destroy()
     SubmitButton = tk.Button(dwin, text='완료', command=SubmitButtonCommand, relief='groove')
     SubmitButton.pack(fill='x', side='bottom', expand=1)
-    Input = scrolledtext.ScrolledText(dwin, padx=3, pady=3, font=font.Font(family='맑은고딕', size=18))
+    Input = scrolledtext.ScrolledText(dwin, padx=3, pady=3, font=font.Font(family='@맑은 고딕', size=18))
     Input.pack(fill='both', side='top', expand=1, padx=10, ipadx=10, pady=10)
     for m in MemberList:
         Input.insert(tk.END, f'{m}\n')
@@ -172,6 +172,8 @@ def RunButtonCommand():
     SeatButton:list[list[tk.Button]] = []
     TableLabel = ttk.Label(rwin, text='교탁', borderwidth=1, relief='groove', anchor=tk.CENTER)
     TableLabel.place(relx=0.5, rely=0, anchor=tk.N, relwidth=0.4, relheight=0.9/(int(r)*2+1)/1.5)
+    TitleLabel = ttk.Label(rwin, text='제목:', justify='center')
+    TitleLabel.place(relx=0.79, rely=0, anchor=tk.N, relwidth=0.1, relheight=0.9/(int(r)*2+1)/1.5)
     TitleInput = ttk.Entry(rwin)
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
     TitleInput.insert(tk.END, string=now.strftime("%Y-%m-%d-%H:%M:%S"))
@@ -292,6 +294,7 @@ def RunButtonCommand():
             for j in i:
                 if (j['text'] != 'X'):
                     f.write(j['text'] + '\n')
+        img.show()
         f.close()
         
         
