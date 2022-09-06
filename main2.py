@@ -112,7 +112,7 @@ DetailMemberButton.place(relx=0.75, rely=0.3)
 
 def SettingSaveButtonCommand():
     now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
-    fn = filedialog.asksaveasfilename(filetypes=(('Seat Arranger Setting Files', '*.sasf'),), title=now.strftime("%Y-%m-%d-%H:%M:%S"), initialdir='./loader')
+    fn = filedialog.asksaveasfilename(filetypes=(('Seat Arranger Setting Files', '*.sasf'),), title='Save Setting as', initialdir='./loader', initialfile=now.strftime("%Y-%m-%d-%H-%M-%S"))
     if (not fn):
         return
     f = open(f'{fn}.sasf', 'w', encoding='utf-8')
@@ -126,7 +126,7 @@ def SettingSaveButtonCommand():
         f.write(f'{i}\n')
     f.close()
 def SettingLoadButtonCommand():
-    fn = filedialog.askopenfilename(filetypes=(('Seat Arranger Setting Files', '*.sasf'),), initialdir='./loader')
+    fn = filedialog.askopenfilename(filetypes=(('Seat Arranger Setting Files', '*.sasf'), ), title='Open Setting as', initialdir='./loader')
     if (not fn):
         return
     f = open(fn, 'r', encoding='utf-8')
@@ -172,11 +172,15 @@ def RunButtonCommand():
     SeatButton:list[list[tk.Button]] = []
     TableLabel = ttk.Label(rwin, text='교탁', borderwidth=1, relief='groove', anchor=tk.CENTER)
     TableLabel.place(relx=0.5, rely=0, anchor=tk.N, relwidth=0.4, relheight=0.9/(int(r)*2+1)/1.5)
+    TitleInput = ttk.Entry(rwin)
+    now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+    TitleInput.insert(tk.END, string=now.strftime("%Y-%m-%d-%H:%M:%S"))
+    TitleInput.place(relx=0.85, rely=0, anchor=tk.N, relwidth=0.1, relheight=0.9/(int(r)*2+1)/1.5)
     for i in range(int(len(seat))):
         SeatButton.append([])
         for j in range(int(len(seat[i]))):
             b = tk.Button(rwin, text='-' if seat[i][j] == '.' else 'X', relief='groove', background='#c2f1f5' if seat[i][j] == '.' else '#f5c2c2')
-            b.config(font=font.Font(family='맑은고딕', size=min(b.winfo_width(), b.winfo_height()), weight='bold'))
+            b.config(font=font.Font(family='Malgun Gothic', size=min(b.winfo_width(), b.winfo_height()), weight='bold'))
             SeatButton[i].append(b)
             b.place(relwidth=1/(int(c)*2),relheight=0.9/(int(r)*2+1),relx = (1/(int(c) + 1) * (j+1)), rely=(0.9 / (int(r)+1) * (i+1)), anchor=tk.CENTER)
     random.shuffle(member)
@@ -235,13 +239,13 @@ def RunButtonCommand():
                     SeatButton[i][j].config(command=lambda : 0)
 
     def SaveStateButtonCommand():
-        fn = filedialog.asksaveasfilename(initialdir='./loader', filetypes=(('Seat Arrange Files', '*.saf'), ))
+        fn = filedialog.asksaveasfilename(initialdir='./result', filetypes=(('Seat Arrange Files', '*.saf'), ), title='Save State as', initialfile=now.strftime("%Y-%m-%d-%H-%M-%S"))
         if (not fn):
             return
         #fn = messagebox.askquestion('파일이름', '저장할 파일의 이름을 입력해주세요.')
         #if (not fn):
         #    return
-        title = os.path.basename(fn)
+        title = TitleInput.get()
         w = 1042
         h = 617
         objfont = ImageFont.truetype('malgunbd.ttf', 18, encoding='utf-8')
@@ -295,7 +299,7 @@ def RunButtonCommand():
 
     def LoadStateButtonCommand():
         nonlocal SeatButton, TableLabel, seat, r, c, arr
-        fn = filedialog.askopenfilename(initialdir='./loader', filetypes=(('Seat Arrange File', '*.saf'),))
+        fn = filedialog.askopenfilename(initialdir='./loader', filetypes=(('Seat Arrange File', '*.saf'),), title='Open State as')
         f = open(fn, 'r', encoding='utf-8')
         r, c = f.readline().strip('\n').split()
         r = int(r)
