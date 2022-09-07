@@ -270,7 +270,7 @@ def RunButtonCommand():
         for i in range(len(seat)):
             for j in range(len(seat[i])):
                 drawer.rectangle((3+cellw*j+voidw*j+2*j, 40+i+cellh*i, 3+cellw*(j+1)+voidw*j+2*j, 40+i+cellh*(i+1)))#좌석
-                text = SeatButton[i][j]['text']
+                text = SeatButton[r - i - 1][c - j - 1]['text']
                 drawer.text(((3+cellw*j+voidw*j+2*j+3+cellw*(j+1)+voidw*j+2*j)/2, (40+i+cellh*i+40+i+cellh*(i+1))/2), text=text, anchor='mm', align='center', font=mfont)
                 drawer.rectangle((4+cellw*(j+1)+voidw*j+2*j,40+i+cellh*i, 4+cellw*(j+1)+voidw*(j+1)+2*j,40+i+cellh*(i+1)))
                 h = max(h, 40+i+cellh*(i+1))

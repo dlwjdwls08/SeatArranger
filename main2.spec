@@ -8,7 +8,7 @@ a = Analysis(
     ['main2.py'],
     pathex=[],
     binaries=[],
-    datas=[('./util/chair.png', '.')],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
